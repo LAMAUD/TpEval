@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<ui:composition template="/protected/home.xhtml">
+	<ui:define name="contenu">
+
+		<h1>Liste Formateurs</h1>
+
+		<h:form>
+			<h:dataTable value="#{formateurController.formateurs}"
+				var="formateur" styleClass="table" headerClass="table-header"
+				rowClasses="table-odd-row,table-even-row">
+				<h:column>
+					<f:facet name="header">Prenom</f:facet>
+					<h:outputText value="#{formateur.prenom}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nom</f:facet>
+					<h:outputText value="#{formateur.nom}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Mail</f:facet>
+					<h:outputText value="#{formateur.mail}" />
+				</h:column>
+				<!-- 				<h:column> -->
+				<!-- 					<h:commandButton value="edit" action="#{viewManager.edit(item)}" /> -->
+				<!-- 				</h:column> -->
+				<h:column>
+					<h:commandButton value="delete"
+						action="#{formateurController.doDelete(formateur)}" />
+				</h:column>
+
+			</h:dataTable>
+<!-- 			<h:commandButton value="#{formateurController.listAll()}"></h:commandButton> -->
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+
+
+
+</html>

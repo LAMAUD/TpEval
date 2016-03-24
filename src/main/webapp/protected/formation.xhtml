@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<ui:composition template="/protected/home.xhtml">
+	<ui:define name="contenu">
+
+		<h1>Liste Formations</h1>
+
+		<h:form>
+			<h:dataTable value="#{formationController.formations}"
+				var="formation" styleClass="table" headerClass="table-header"
+				rowClasses="table-odd-row,table-even-row">
+				<h:column>
+					<f:facet name="header">Sujet Formation</f:facet>
+					<h:outputText value="#{formation.nom}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Debut :</f:facet>
+					<h:outputText value="#{formation.session.dateDebut}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Fin :</f:facet>
+					<h:outputText value="#{formation.session.dateFin}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Formateur</f:facet>
+					<h:outputText value="#{formation.formateur}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Session</f:facet>
+					<h:outputText value="#{formation.session.nom}" />
+				</h:column>
+				<!-- 				<h:column> -->
+				<!-- 					<h:commandButton value="edit" action="#{viewManager.edit(item)}" /> -->
+				<!-- 				</h:column> -->
+				<h:column>
+					<h:commandButton value="delete"
+						action="#{formationController.doDelete(formation)}" />
+				</h:column>
+
+			</h:dataTable>
+			<!-- 			<h:commandButton value="#{formateurController.listAll()}"></h:commandButton> -->
+		</h:form>
+
+		<button id="toggleFormation">Ajouter une formation</button>
+
+		<div class="container">
+			<div class="row">
+				<div id="Formation" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					<h3>Formation</h3>
+					<h:form>
+						<div class="form-group">
+							<label for="nom">Nom de la formation:</label>
+							<h:inputText id="nom" styleClass="form-control"
+								value="#{formationController.formation.nom}" />
+						</div>
+						<div class="form-group">
+							<label for="nom">Choix du formateur:</label>
+							<h:selectOneMenu id="listFormateurs"
+								value="#{formationController.selectedFormateur}"
+								styleClass="form-control" converter="#{formateurConverter}">
+								<f:selectItems value="#{formateurController.formateurs}"
+									var="formateur" itemValue="#{formateur}"
+									itemLabel="#{formateur.nom}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<label for="nom">Choix de la session :</label>
+							<h:selectOneMenu id="listSessions"
+								value="#{formationController.selectedSession}"
+								styleClass="form-control" converter="#{sessionConverter}">
+								<f:selectItems value="#{sessionController.sessions}" var="sess"
+									itemValue="#{sess}" itemLabel="#{sess.nom}" />
+							</h:selectOneMenu>
+						</div>
+						<p>
+							<h:commandButton value="add"
+								action="#{formationController.doSave}" />
+						</p>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+
+</html>

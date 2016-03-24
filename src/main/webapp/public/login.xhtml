@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		rel="stylesheet" />
+	<link href="/Eval/CSS/fichier.css" rel="stylesheet" />
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+	<script type='text/javascript' src="/Eval/JS/fichier.js" />
+
+
+</h:head>
+<h:body>
+	<p>Connexion pour accèder au site d'évaluation :</p>
+	<form class="form-horizontal" method="post" action="j_security_check">
+		<div class="control-group">
+			<label class="control-label" for="j_username">Email :</label>
+			<div class="controls">
+				<input type="text" id="j_username" name="j_username"
+					placeholder="Email" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="j_password">Mot de Passe :</label>
+			<div class="controls">
+				<input type="password" id="j_password" name="j_password"
+					placeholder="Password" />
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" name="submit" class="btn">Valider</button>
+				<button type="reset" name="reset" class="btn">Reset</button>
+			</div>
+		</div>
+	</form>
+
+	<button id="toggleFormateur">Enregistrement Formateur</button>
+	<button id="toggleStagiaire">Enregistrement Stagiaire</button>
+	<button id="toggleAdmin">Enregistrement Admin</button>
+
+	<div class="container">
+		<div class="row">
+			<div id="Formateur" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<h3>Formateur</h3>
+				<h:form>
+					<div class="form-group">
+						<label for="nom">Nom :</label>
+						<h:inputText id="nom" styleClass="form-control"
+							value="#{formateurController.formateur.nom}" />
+					</div>
+					<div class="form-group">
+						<label for="prenom">Prenom :</label>
+						<h:inputText id="prenom" styleClass="form-control"
+							value="#{formateurController.formateur.prenom}" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email address :</label>
+						<h:inputText id="email" styleClass="form-control"
+							value="#{formateurController.formateur.mail}" required="true"
+							requiredMessage="Mail Obligatoire">
+							<f:validator binding="#{emailAddressValidator}" />
+						</h:inputText>
+						<h:message for="email" errorStyle="color:red; display:block" />
+
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="pass">Password :</h:outputLabel>
+						<h:inputSecret id="pass" styleClass="form-control"
+							value="#{formateurController.formateur.pass}">
+							<f:validator validatorId="passwordValidator" />
+							<f:attribute name="confirmPassword" value="#{confirmPassword}" />
+						</h:inputSecret>
+						<h:message for="pass" style="color: red;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="confirmPassword">Confirm Password :</h:outputLabel>
+						<h:inputSecret id="confirmPassword" styleClass="form-control"
+							binding="#{confirmPassword}"
+							requiredMessage="Please enter confirm password" />
+						<h:message for="confirmPassword" style="color: red;" />
+
+					</div>
+
+					<p>
+						<h:commandButton value="add"
+							action="#{formateurController.doSave}" />
+
+					</p>
+
+				</h:form>
+			</div>
+			<div id="Stagiaire" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<h3>Stagiaire</h3>
+				<h:form>
+					<div class="form-group">
+						<label for="nom">Nom :</label>
+						<h:inputText id="nom" styleClass="form-control"
+							value="#{stagiaireController.stagiaire.nom}" />
+					</div>
+					<div class="form-group">
+						<label for="prenom">Prenom :</label>
+						<h:inputText id="prenom" styleClass="form-control"
+							value="#{stagiaireController.stagiaire.prenom}" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email address :</label>
+						<h:inputText id="email" styleClass="form-control"
+							value="#{stagiaireController.stagiaire.mail}">
+							<f:validator binding="#{emailAddressValidator}" />
+						</h:inputText>
+						<h:message for="email" errorStyle="color:red; display:block" />
+					</div>
+					<div class="form-group">
+						<label for="pass">Password :</label>
+						<h:inputSecret id="pass" styleClass="form-control"
+							value="#{stagiaireController.stagiaire.pass}">
+							<f:validator validatorId="passwordValidator1" />
+							<f:attribute name="confirmPassword1" value="#{confirmPassword1}" />
+						</h:inputSecret>
+						<h:message for="pass" style="color: red;" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="confirmPassword1">Confirm Password :</h:outputLabel>
+						<h:inputSecret id="confirmPassword1" styleClass="form-control"
+							binding="#{confirmPassword1}"
+							requiredMessage="Please enter confirm password" />
+						<h:message for="confirmPassword1" style="color: red;" />
+
+					</div>
+					<div class="form-group">
+						<h:selectManyListbox id="listSessions"
+							value="#{stagiaireController.selectedSessions}"
+							converter="#{sessionConverter}">
+							<f:selectItems value="#{sessionController.sessions}" var="sess"
+								itemValue="#{sess}" itemLabel="#{sess.nom}" />
+						</h:selectManyListbox>
+					</div>
+					<p>
+						<h:commandButton value="add"
+							action="#{stagiaireController.doSave}" />
+					</p>
+				</h:form>
+			</div>
+			<div id="Admin" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<h3>Admin</h3>
+				<h:form>
+					<div class="form-group">
+						<label for="nom">Nom :</label>
+						<h:inputText id="nom" styleClass="form-control"
+							value="#{administrateurController.administrateur.nom}" />
+					</div>
+					<div class="form-group">
+						<label for="prenom">Prenom :</label>
+						<h:inputText id="prenom" styleClass="form-control"
+							value="#{administrateurController.administrateur.prenom}" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email address :</label>
+						<h:inputText id="email" styleClass="form-control"
+							value="#{administrateurController.administrateur.mail}">
+							<f:validator binding="#{emailAddressValidator}" />
+						</h:inputText>
+						<h:message for="email" errorStyle="color:red; display:block" />
+					</div>
+					<div class="form-group">
+						<label for="pass">Password :</label>
+						<h:inputSecret id="pass" styleClass="form-control"
+							value="#{administrateurController.administrateur.pass}">
+							<f:validator validatorId="passwordValidator2" />
+							<f:attribute name="confirmPassword2" value="#{confirmPassword2}" />
+						</h:inputSecret>
+						<h:message for="pass" style="color: red;" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="confirmPassword2">Confirm Password :</h:outputLabel>
+						<h:inputSecret id="confirmPassword2" styleClass="form-control"
+							binding="#{confirmPassword2}"
+							requiredMessage="Please enter confirm password" />
+						<h:message for="confirmPassword2" style="color: red;" />
+					</div>
+					<p>
+						<h:commandButton value="add"
+							action="#{administrateurController.doSave}" />
+					</p>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

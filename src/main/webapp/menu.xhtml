@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		rel="stylesheet" />
+</h:head>
+<h:body>
+	<h:form>
+		<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav navbar-left">
+			<li><h:commandLink action="#{homeController.home()}">Home</h:commandLink></li>
+			<li><h:commandLink action="#{administrateurController.admin()}">Administrateur</h:commandLink></li>
+			<li><h:commandLink action="#{formateurController.format()}">Formateur</h:commandLink></li>
+			<li><h:commandLink action="#{stagiaireController.stag()}">Stagiaire</h:commandLink></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+			<li><h:commandLink action="#{sessionController.sess()}">Session</h:commandLink></li>
+			<li><h:commandLink action="#{formationController.format()}">Formation</h:commandLink></li>
+			<li><h:commandLink action="#{deconnectionController.logout()}">logout</h:commandLink></li>
+			</ul>
+		</div>
+		</nav>
+	</h:form>
+</h:body>
+
+</html>

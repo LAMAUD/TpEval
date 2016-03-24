@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="contenu">
+
+		<h1>Liste Session</h1>
+
+		<h:form>
+			<h:dataTable value="#{sessionController.sessions}" var="sess"
+				styleClass="table" headerClass="table-header"
+				rowClasses="table-odd-row,table-even-row">
+				<h:column>
+					<f:facet name="header">Titre Session</f:facet>
+					<h:outputText value="#{sess.nom}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Date de début</f:facet>
+					<h:outputText value="#{sess.dateDebut}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Date de fin</f:facet>
+					<h:outputText value="#{sess.dateFin}" />
+				</h:column>
+				<!-- 				<h:column> -->
+				<!-- 					<h:commandButton value="edit" action="#{viewManager.edit(item)}" /> -->
+				<!-- 				</h:column> -->
+				<h:column>
+					<f:facet name="header">Liste Formations</f:facet>
+					<h:selectOneMenu value="test">
+						<f:selectItems value="#{sess.formations}" />
+					</h:selectOneMenu>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Liste Participants</f:facet>
+					<h:selectOneMenu value="test">
+						<f:selectItems value="#{sess.stagiaires}" />
+					</h:selectOneMenu>
+				</h:column>
+				<h:column>
+					<h:commandButton value="delete"
+						action="#{sessionController.doDelete(sess)}" />
+				</h:column>
+
+			</h:dataTable>
+			<!-- 			<h:commandButton value="#{formateurController.listAll()}"></h:commandButton> -->
+		</h:form>
+
+		<button id="toggleSession">Ajouter une Session</button>
+
+		<div class="container">
+			<div class="row">
+				<div id="Session" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					<h3>Session</h3>
+					<h:form>
+						<div class="form-group">
+							<label for="nom">Nom de la Session:</label>
+							<h:inputText id="nom" styleClass="form-control"
+								value="#{sessionController.session.nom}" />
+						</div>
+						<div class="form-group">
+							<label for="dateDebut">Date de début :</label>
+							<h:inputText id="dateDebut" styleClass="form-control"
+								value="#{sessionController.session.dateDebut}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:inputText>
+
+
+						</div>
+						<div class="form-group">
+							<label for="dateFin">Fin de la session :</label>
+							<h:inputText id="dateFin" styleClass="form-control"
+								value="#{sessionController.session.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:inputText>
+						</div>
+
+						<p>
+							<h:commandButton value="add" action="#{sessionController.doSave}" />
+						</p>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+
+	</ui:define>
+</ui:composition>
+
+
+
+</html>
