@@ -37,6 +37,13 @@ public class StagiaireController {
 		stagiaire.setSessions(selectedSessions);
 		stagiaire = this.service.create(stagiaire);
 		
+		try {
+			this.servlet.doGet(stagiaire);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return "login?faces-redirect=true";
 	}

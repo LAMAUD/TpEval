@@ -3,46 +3,49 @@ package fr.treeptik.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.xml.ws.WebServiceRef;
 
 import fr.treeptik.pojo.Administrateur;
-import fr.treeptik.service.AdministrateurServiceImpl;
-
+import fr.treeptik.ws.AdministrateurServiceImpl;
+import fr.treeptik.ws.AdministrateurServiceImplService;
 
 @ManagedBean
 @RequestScoped
 public class AdministrateurController {
-	
-	@EJB
-	private AdministrateurServiceImpl service;
+
+	@WebServiceRef
+	private AdministrateurServiceImplService administrateurServiceImplService;
 
 	private Administrateur administrateur = new Administrateur();
 	private List<Administrateur> administrateurs;
 
-
-	public String admin(){
+	public String admin() {
 		return "/protected/administrateur/admin?faces-redirect=true";
 	}
-	
+
 	public String doSave() {
-		administrateur=this.service.create(administrateur);
-		
-		
+		AdministrateurServiceImpl service = (AdministrateurServiceImpl) administrateurServiceImplService
+				.getAdministrateurServiceImplPort();
+		administrateur = service.create(administrateur);
+
 		return "login?faces-redirect=true";
 	}
 
 	public String doDelete(Administrateur administrateur) {
-	
-			this.service.delete(administrateur.getId());
+		AdministrateurServiceImpl service = (AdministrateurServiceImpl) administrateurServiceImplService
+				.getAdministrateurServiceImplPort();
+		service.delete(administrateur.getId());
 
 		return "/protected/administrateur/admin?faces-redirect=true";
 	}
 
 	@PostConstruct
-	public void listAll(){
-		administrateurs=service.findAll();
+	public void listAll() {
+		AdministrateurServiceImpl service = (AdministrateurServiceImpl) administrateurServiceImplService
+				.getAdministrateurServiceImplPort();
+		administrateurs = service.findAll();
 	}
 
 	public List<Administrateur> getAdministrateurs() {
@@ -59,6 +62,15 @@ public class AdministrateurController {
 
 	public void setAdministrateur(Administrateur administrateur) {
 		this.administrateur = administrateur;
+	}
+
+	public AdministrateurServiceImplService getAdministrateurServiceImplService() {
+		return administrateurServiceImplService;
+	}
+
+	public void setAdministrateurServiceImplService(
+			AdministrateurServiceImplService administrateurServiceImplService) {
+		this.administrateurServiceImplService = administrateurServiceImplService;
 	}
 
 }

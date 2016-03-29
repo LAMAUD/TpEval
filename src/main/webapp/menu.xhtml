@@ -17,9 +17,9 @@
 		<div class="container-fluid">
 			<ul class="nav navbar-nav navbar-left">
 			<li><h:commandLink action="#{homeController.home()}">Home</h:commandLink></li>
-			<li><h:commandLink action="#{administrateurController.admin()}">Administrateur</h:commandLink></li>
-			<li><h:commandLink action="#{formateurController.format()}">Formateur</h:commandLink></li>
-			<li><h:commandLink action="#{stagiaireController.stag()}">Stagiaire</h:commandLink></li>
+			<li><h:commandLink action="#{administrateurController.admin()}" rendered="#{request.isUserInRole('Administrateur')}">Administrateur</h:commandLink></li>
+			<li><h:commandLink action="#{formateurController.format()}" rendered="#{request.isUserInRole('Administrateur')}">Formateur</h:commandLink></li>
+			<li><h:commandLink action="#{stagiaireController.stag()}" rendered="#{request.isUserInRole('Administrateur') or request.isUserInRole('Formateur')}">Stagiaire</h:commandLink></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 			<li><h:commandLink action="#{sessionController.sess()}">Session</h:commandLink></li>

@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 @Entity
+@XmlAccessorType
 @NamedQueries({ @NamedQuery(name = "findAllUtilisateurs", query = "SELECT a FROM Utilisateur a") })
 public class Utilisateur implements Serializable {
 
